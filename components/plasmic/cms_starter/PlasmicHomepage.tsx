@@ -59,6 +59,9 @@ import {
   useGlobalActions
 } from "@plasmicapp/react-web/lib/host";
 
+import { SliderWrapper } from "@plasmicpkgs/react-slick";
+import { sliderHelpers as SliderWrapper_Helpers } from "@plasmicpkgs/react-slick";
+
 import "@plasmicapp/react-web/lib/plasmic.css";
 
 import projectcss from "./plasmic.module.css"; // plasmic-import: amnVJ8o1F7xq2gJ3HyPq2x/projectcss
@@ -82,6 +85,7 @@ export type PlasmicHomepage__OverridesType = {
   text?: Flex__<"div">;
   ol?: Flex__<"ol">;
   link?: Flex__<"a"> & Partial<LinkProps>;
+  sliderCarousel?: Flex__<typeof SliderWrapper>;
 };
 
 export interface DefaultHomepageProps {}
@@ -124,6 +128,27 @@ function PlasmicHomepage__RenderFunc(props: {
   const refsRef = React.useRef({});
   const $refs = refsRef.current;
 
+  const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
+    () => [
+      {
+        path: "sliderCarousel.currentSlide",
+        type: "private",
+        variableType: "number",
+        initFunc: ({ $props, $state, $queries, $ctx }) => 0,
+
+        refName: "sliderCarousel",
+        onMutate: generateOnMutateForSpec("currentSlide", SliderWrapper_Helpers)
+      }
+    ],
+    [$props, $ctx, $refs]
+  );
+  const $state = useDollarState(stateSpecs, {
+    $props,
+    $ctx,
+    $queries: {},
+    $refs
+  });
+
   return (
     <React.Fragment>
       <Head></Head>
@@ -164,7 +189,7 @@ function PlasmicHomepage__RenderFunc(props: {
                 sty.h1
               )}
             >
-              {"Get started with Plasmic visual CMS."}
+              {"Get started with Plasmic visual CMS. (CODE GEN)"}
             </h1>
             <div
               data-plasmic-name={"text"}
@@ -333,6 +358,93 @@ function PlasmicHomepage__RenderFunc(props: {
               </React.Fragment>
             </div>
           </section>
+          {(() => {
+            const child$Props = {
+              beforeChange: generateStateOnChangePropForCodeComponents(
+                $state,
+                "currentSlide",
+                ["sliderCarousel", "currentSlide"],
+                SliderWrapper_Helpers
+              ),
+              className: classNames("__wab_instance", sty.sliderCarousel),
+              initialSlide: generateStateValueProp($state, [
+                "sliderCarousel",
+                "currentSlide"
+              ]),
+              ref: ref => {
+                $refs["sliderCarousel"] = ref;
+              },
+              sliderScopeClassName: sty["sliderCarousel__slider"]
+            };
+            initializeCodeComponentStates(
+              $state,
+              [
+                {
+                  name: "currentSlide",
+                  plasmicStateName: "sliderCarousel.currentSlide"
+                }
+              ],
+              [],
+              SliderWrapper_Helpers ?? {},
+              child$Props
+            );
+
+            return (
+              <SliderWrapper
+                data-plasmic-name={"sliderCarousel"}
+                data-plasmic-override={overrides.sliderCarousel}
+                {...child$Props}
+              >
+                <div
+                  className={classNames(projectcss.all, sty.freeBox___7Dqf2)}
+                >
+                  <PlasmicImg__
+                    alt={""}
+                    className={classNames(sty.img___3A4QA)}
+                    displayHeight={"auto"}
+                    displayMaxHeight={"none"}
+                    displayMaxWidth={"100%"}
+                    displayMinHeight={"0"}
+                    displayMinWidth={"0"}
+                    displayWidth={"auto"}
+                    src={
+                      "https://static1.plasmic.app/components/react-slick/slide1.png"
+                    }
+                  />
+                </div>
+                <div className={classNames(projectcss.all, sty.freeBox__aAHp)}>
+                  <PlasmicImg__
+                    alt={""}
+                    className={classNames(sty.img__pbTp3)}
+                    displayHeight={"auto"}
+                    displayMaxHeight={"none"}
+                    displayMaxWidth={"100%"}
+                    displayMinHeight={"0"}
+                    displayMinWidth={"0"}
+                    displayWidth={"auto"}
+                    src={
+                      "https://static1.plasmic.app/components/react-slick/slide2.png"
+                    }
+                  />
+                </div>
+                <div className={classNames(projectcss.all, sty.freeBox__a7HRg)}>
+                  <PlasmicImg__
+                    alt={""}
+                    className={classNames(sty.img__lO4Ya)}
+                    displayHeight={"auto"}
+                    displayMaxHeight={"none"}
+                    displayMaxWidth={"100%"}
+                    displayMinHeight={"0"}
+                    displayMinWidth={"0"}
+                    displayWidth={"auto"}
+                    src={
+                      "https://static1.plasmic.app/components/react-slick/slide3.png"
+                    }
+                  />
+                </div>
+              </SliderWrapper>
+            );
+          })()}
         </div>
       </div>
     </React.Fragment>
@@ -340,12 +452,13 @@ function PlasmicHomepage__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ["root", "section", "h1", "text", "ol", "link"],
+  root: ["root", "section", "h1", "text", "ol", "link", "sliderCarousel"],
   section: ["section", "h1", "text", "ol", "link"],
   h1: ["h1"],
   text: ["text", "ol", "link"],
   ol: ["ol"],
-  link: ["link"]
+  link: ["link"],
+  sliderCarousel: ["sliderCarousel"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -357,6 +470,7 @@ type NodeDefaultElementType = {
   text: "div";
   ol: "ol";
   link: "a";
+  sliderCarousel: typeof SliderWrapper;
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -424,6 +538,7 @@ export const PlasmicHomepage = Object.assign(
     text: makeNodeComponent("text"),
     ol: makeNodeComponent("ol"),
     link: makeNodeComponent("link"),
+    sliderCarousel: makeNodeComponent("sliderCarousel"),
 
     // Metadata about props expected for PlasmicHomepage
     internalVariantProps: PlasmicHomepage__VariantProps,
